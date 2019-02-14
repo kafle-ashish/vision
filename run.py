@@ -15,7 +15,7 @@ if __name__ == "__main__":
     while True:
         _, frame = cap.read()
         print("Image Captured ...")
-        print(frame.size)
+        #print(frame.size)
         red_rect = white_black = frame
         #First find if a rectangular patch of red exists
         red_rect = color_finder(red_rect, color="red")
@@ -45,9 +45,9 @@ if __name__ == "__main__":
                     motor.allStop()
 
                 x,y,w,h = cv2.boundingRect(contour)
-                cv2.rectangle(red_rect,(x,y),(x+w,y+h),(0,255,0),2) 
+                cv2.rectangle(frame,(x,y),(x+w,y+h),(0,255,0),2) 
         # cv2.imshow('Output', median)
-        cv2.imshow('Red', red_rect)
+        cv2.imshow('Red', frame)
         print("Finished ...")
         k = cv2.waitKey(5) & 0xFF
         if k == 27:

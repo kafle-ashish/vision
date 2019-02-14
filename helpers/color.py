@@ -14,27 +14,29 @@ def nothing():
     pass
 
 
-cv2.namedWindow("Trackbars")
+#cv2.namedWindow("Trackbars")
  
-cv2.createTrackbar("L - H", "Trackbars", 0, 179, nothing)
-cv2.createTrackbar("L - S", "Trackbars", 0, 255, nothing)
-cv2.createTrackbar("L - V", "Trackbars", 0, 255, nothing)
-cv2.createTrackbar("U - H", "Trackbars", 179, 179, nothing)
-cv2.createTrackbar("U - S", "Trackbars", 255, 255, nothing)
-cv2.createTrackbar("U - V", "Trackbars", 255, 255, nothing)
+#cv2.createTrackbar("L - H", "Trackbars", 0, 179, nothing)
+#cv2.createTrackbar("L - S", "Trackbars", 0, 255, nothing)
+#cv2.createTrackbar("L - V", "Trackbars", 0, 255, nothing)
+#cv2.createTrackbar("U - H", "Trackbars", 179, 179, nothing)
+#cv2.createTrackbar("U - S", "Trackbars", 255, 255, nothing)
+#cv2.createTrackbar("U - V", "Trackbars", 255, 255, nothing)
 
 def color_finder(frame, color):
     hsv  = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     maskWhite = maskBlack = mask = ''
-    l_h = cv2.getTrackbarPos("L - H", "Trackbars")
-    l_s = cv2.getTrackbarPos("L - S", "Trackbars")
-    l_v = cv2.getTrackbarPos("L - V", "Trackbars")
-    u_h = cv2.getTrackbarPos("U - H", "Trackbars")
-    u_s = cv2.getTrackbarPos("U - S", "Trackbars")
-    u_v = cv2.getTrackbarPos("U - V", "Trackbars")
+    #l_h = cv2.getTrackbarPos("L - H", "Trackbars")
+    #l_s = cv2.getTrackbarPos("L - S", "Trackbars")
+    #l_v = cv2.getTrackbarPos("L - V", "Trackbars")
+    #u_h = cv2.getTrackbarPos("U - H", "Trackbars")
+    #u_s = cv2.getTrackbarPos("U - S", "Trackbars")
+    #u_v = cv2.getTrackbarPos("U - V", "Trackbars")
 
     if color == "red":
         mask =  cv2.inRange(hsv, LOWER_RED, UPPER_RED)
+        res = cv2.bitwise_and(frame, frame, mask=mask)
+        return res
     if color == "bw":
         maskWhite =  cv2.inRange(hsv, LOWER_WHITE, UPPER_WHITE)
         maskBlack =  cv2.inRange(hsv, LOWER_BLACK, UPPER_BLACK)
