@@ -25,7 +25,7 @@ cv2.createTrackbar("U - V", "Trackbars", 255, 255, nothing)
 
 def color_finder(frame, color):
     hsv  = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-    mask = ''
+    maskWhite = maskBlack = mask = ''
     l_h = cv2.getTrackbarPos("L - H", "Trackbars")
     l_s = cv2.getTrackbarPos("L - S", "Trackbars")
     l_v = cv2.getTrackbarPos("L - V", "Trackbars")
@@ -35,10 +35,22 @@ def color_finder(frame, color):
 
     if color == "red":
         mask =  cv2.inRange(hsv, LOWER_RED, UPPER_RED)
-    if color == "white":
-        mask =  cv2.inRange(hsv, LOWER_WHITE, UPPER_WHITE)
-    if color == "black":
-        mask =  cv2.inRange(hsv, LOWER_BLACK, UPPER_BLACK)
+    if color == "bw":
+        maskWhite =  cv2.inRange(hsv, LOWER_WHITE, UPPER_WHITE)
+        maskBlack =  cv2.inRange(hsv, LOWER_BLACK, UPPER_BLACK)
+        resWhite = cv2.bitwise_and(frame, frame, mask=maskWhite)
+        resBlack = cv2.bitwise_and(frame, frame, mask=maskBlack)
+        return resBlack, resWhite
+    
+    if color == "rbw":
+        maskRed =  cv2.inRange(hsv, LOWER_RED, UPPER_RED)
+        maskWhite =  cv2.inRange(hsv, LOWER_WHITE, UPPER_WHITE)
+        maskBlack =  cv2.inRange(hsv, LOWER_BLACK, UPPER_BLACK)
+        resWhite = cv2.bitwise_and(frame, frame, mask=maskWhite)
+        resBlack = cv2.bitwise_and(frame, frame, mask=maskBlack)
+        resRed = cv2.bitwise_and(frame, frame, mask=maskRed)
+        return resRed, resBlack, resWhite
+        
     else:
         lower = np.array([l_h, l_s, l_v])
         upper = np.array([u_h, u_s, u_v])

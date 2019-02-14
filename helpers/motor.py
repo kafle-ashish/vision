@@ -1,5 +1,6 @@
 from gpiozero import PWMOutputDevice
 
+
 class Motor:
     def __init__(self):
         MOTA_PWM_FORWARD_LEFT_PIN = 26	# IN1 - Forward Drive
@@ -64,6 +65,33 @@ class Motor:
         
         self.forwardRightMotD.value = 0
         self.reverseRightMotD.value = 1.0 
+
+    def leftTurn(self):
+        self.forwardLeftMotA.value = 1.0
+        self.reverseLeftMotA.value = 0
+        
+        self.forwardRightMotB.value = 0
+        self.reverseRightMotB.value = 1.0 
+        
+        self.forwardLeftMotC.value = 1.0
+        self.reverseLeftMotC.value = 0
+        
+        self.forwardRightMotD.value = 0
+        self.reverseRightMotD.value = 1.0 
+
+    def rightTurn(self):
+        self.forwardLeftMotA.value = 0
+        self.reverseLeftMotA.value = 1.0
+        
+        self.forwardRightMotB.value = 1.0
+        self.reverseRightMotB.value = 0 
+        
+        self.forwardLeftMotC.value = 0
+        self.reverseLeftMotC.value = 1.0
+        
+        self.forwardRightMotD.value = 1.0
+        self.reverseRightMotD.value = 0 
+    
 
 
 #motor = Motor()

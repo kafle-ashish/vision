@@ -3,21 +3,22 @@
 import cv2
 import numpy as np
 
-#from helpers import Motor
+from helpers import Motor
 from helpers import color_finder
 from helpers import get_contours, find_mean, auto_canny, roi
 print(cv2.__version__)
 cap = cv2.VideoCapture(0)
-#motor = Motor()
+motor = Motor()
 
 if __name__ == "__main__":
     print("Starting seek and destroy ...")
     while True:
         _, frame = cap.read()
         print("Image Captured ...")
-        red_rect = frame
+        print(frame.size)
+        red_rect = white_black = frame
         #First find if a rectangular patch of red exists
-        red_rect = color_finder(red_rect, color="")
+        red_rect = color_finder(red_rect, color="red")
         #imgray = cv2.cvtColor(red_rect,cv2.COLOR_BGR2GRAY)
         # ret,thresh = cv2.threshold(imgray,127,255,0)
         contours, _ = get_contours(red_rect)
@@ -32,12 +33,16 @@ if __name__ == "__main__":
                 position = find_mean(contour)
                 if position[0] < 290:
                     print("move_right")
+                    motor.rightTurn()
                 elif position[0] <= 350 and position[0] >= 290:
                     print("move_forward")
+                    motor.forwardDrive()
                 elif position[0] > 350:
                     print("move_left")
+                    motor.leftTurn()
                 else:
                     print("stop")
+                    motor.allStop()
 
                 x,y,w,h = cv2.boundingRect(contour)
                 cv2.rectangle(red_rect,(x,y),(x+w,y+h),(0,255,0),2) 
